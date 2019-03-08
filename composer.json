@@ -1,0 +1,26 @@
+{
+    "name": "alex/php-plugins-runner",
+    "description": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "alexpts",
+            "email": "alexpts@yandex.ru"
+        }
+    ],
+    "config": {
+        "optimize-autoloader": true
+    },
+    "require": {
+        "php": ">=7.2",
+        "alexpts/php-simple-events": "^3.1",
+        "symfony/dependency-injection": "^4.2",
+        "symfony/config": "^4.2",
+        "alexpts/symfony-di-loader": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Next\\PluginRunner\\": "src"
+        }
+    }
+}
