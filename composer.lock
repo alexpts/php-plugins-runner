@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0c6a3d45c71dcacb9aa67192446bafa",
+    "content-hash": "643e09465684ddb4959360a456accb1a",
     "packages": [
         {
             "name": "alexpts/php-simple-events",

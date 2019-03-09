@@ -1,6 +1,7 @@
 {
-    "name": "alex/php-plugins-runner",
+    "name": "alexpts/php-plugins-runner",
     "description": "",
+    "homepage": "https://github.com/alexpts/php-plugins-runner",
     "license": "MIT",
     "authors": [
         {
