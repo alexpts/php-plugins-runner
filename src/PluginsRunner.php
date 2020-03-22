@@ -8,8 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PluginsRunner
 {
-    /** @var EventsInterface */
-    protected $events;
+    protected EventsInterface $events;
 
     public function __construct(EventsInterface $events)
     {
@@ -22,7 +21,7 @@ class PluginsRunner
      */
 	public function init(array $plugins, ContainerInterface $container): void
     {
-		foreach ($plugins as $class) {
+		foreach ($plugins as $class => $env) {
 		    /** @var Plugin $plugin */
 		    $plugin = new $class($container);
 			$plugin->init();

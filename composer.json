@@ -13,11 +13,11 @@
         "optimize-autoloader": true
     },
     "require": {
-        "php": ">=7.2",
-        "alexpts/php-simple-events": "^3.1",
-        "symfony/dependency-injection": "^4.2",
-        "symfony/config": "^4.2",
-        "alexpts/symfony-di-loader": "^1.1"
+        "php": ">=7.4",
+        "alexpts/php-simple-events": "^4.0",
+        "symfony/dependency-injection": "^5.0",
+        "symfony/config": "^5.0",
+        "alexpts/symfony-di-loader": "^2.1"
     },
     "autoload": {
         "psr-4": {

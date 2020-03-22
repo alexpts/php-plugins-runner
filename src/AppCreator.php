@@ -3,9 +3,11 @@ declare(strict_types = 1);
 
 namespace Next\PluginRunner;
 
+use Exception;
 use Psr\Container\ContainerInterface;
 use PTS\Events\EventsInterface;
 use PTS\SymfonyDiLoader\FactoryContainer;
+use ReflectionException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -17,8 +19,8 @@ class AppCreator
      * @param ExtensionInterface[] $extensions
      *
      * @return ContainerInterface
-     * @throws \ReflectionException
-     * @throws \Exception
+     * @throws ReflectionException
+     * @throws Exception
      */
     public static function create(string $projectDir, array $extensions = []): ContainerInterface
     {
@@ -34,7 +36,6 @@ class AppCreator
 
         $runnerPlugins = new PluginsRunner($events);
         $runnerPlugins->init($pluginsList, $container);
-        $events->emit('app.factory.ready');
 
         return $container;
     }

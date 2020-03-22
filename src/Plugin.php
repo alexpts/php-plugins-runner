@@ -5,17 +5,18 @@ namespace Next\PluginRunner;
 
 use Psr\Container\ContainerInterface;
 use PTS\Events\EventsInterface;
+use ReflectionClass;
 use Symfony\Component\DependencyInjection\Container;
+use function dirname;
 
 abstract class Plugin
 {
     /** @var ContainerInterface|Container */
-    protected $container;
-    /** @var EventsInterface */
-    protected $events;
+    protected ContainerInterface $container;
+    protected EventsInterface $events;
 
     /** @var string|null */
-    protected $dir;
+    protected ?string $dir = null;
 
 	public function __construct(ContainerInterface $container)
     {
@@ -31,9 +32,9 @@ abstract class Plugin
     protected function getDir(): string
     {
         if (!$this->dir) {
-            $reflector = new \ReflectionClass($this);
+            $reflector = new ReflectionClass($this);
             $filename = $reflector->getFileName();
-            $this->dir = \dirname($filename);
+            $this->dir = dirname($filename);
         }
 
         return $this->dir;
