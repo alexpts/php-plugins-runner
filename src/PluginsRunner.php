@@ -1,16 +1,16 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Next\PluginRunner;
 
-use PTS\Events\EventsInterface;
+use PTS\Events\EventEmitterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PluginsRunner
 {
-    protected EventsInterface $events;
+    protected EventEmitterInterface $events;
 
-    public function __construct(EventsInterface $events)
+    public function __construct(EventEmitterInterface $events)
     {
         $this->events = $events;
     }
@@ -19,13 +19,13 @@ class PluginsRunner
      * @param string[] $plugins
      * @param ContainerInterface $container
      */
-	public function init(array $plugins, ContainerInterface $container): void
+    public function init(array $plugins, ContainerInterface $container): void
     {
-		foreach ($plugins as $class => $env) {
-		    /** @var Plugin $plugin */
-		    $plugin = new $class($container);
-			$plugin->init();
-		}
+        foreach ($plugins as $class => $env) {
+            /** @var Plugin $plugin */
+            $plugin = new $class($container);
+            $plugin->init();
+        }
 
         $this->events->emit('plugins.init');
     }

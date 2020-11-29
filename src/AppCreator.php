@@ -1,16 +1,13 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Next\PluginRunner;
 
 use Exception;
 use Psr\Container\ContainerInterface;
-use PTS\Events\EventsInterface;
-use PTS\SymfonyDiLoader\FactoryContainer;
-use ReflectionException;
-use Symfony\Component\Config\FileLocator;
+use PTS\Events\EventEmitterInterface;
+use PTS\SymfonyDiLoader\LoaderContainer;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class AppCreator
 {
@@ -19,7 +16,6 @@ class AppCreator
      * @param ExtensionInterface[] $extensions
      *
      * @return ContainerInterface
-     * @throws ReflectionException
      * @throws Exception
      */
     public static function create(string $projectDir, array $extensions = []): ContainerInterface
@@ -27,12 +23,12 @@ class AppCreator
         $pluginsList = require $projectDir . '/plugins.php';
         $cacheContainerFile = $projectDir . '/runtime/cache/di.cache.php';
 
-        $factory = new FactoryContainer(YamlFileLoader::class, new FileLocator);
-        $loader = new LoaderContainerFromPlugins($pluginsList, $cacheContainerFile, $factory);
-
+        $loader = new LoaderContainer;
+        $configFinder = new ConfigFinder;
         self::applyExtension($loader, $extensions);
-        $container = $loader->getContainer();
-        $events = $container->get(EventsInterface::class);
+
+        $container = $loader->getContainer($configFinder->findConfigs($pluginsList), $cacheContainerFile);
+        $events = $container->get(EventEmitterInterface::class);
 
         $runnerPlugins = new PluginsRunner($events);
         $runnerPlugins->init($pluginsList, $container);
@@ -40,7 +36,7 @@ class AppCreator
         return $container;
     }
 
-    protected static function applyExtension(LoaderContainerFromPlugins $loader, array $extensions): void
+    protected static function applyExtension(LoaderContainer $loader, array $extensions): void
     {
         foreach ($extensions as $extension) {
             $loader->addExtension($extension);

@@ -9,10 +9,8 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 class ParameterWithNamesDiExtension extends Extension
 {
 
-    /** @var string */
-    protected $paramName;
-    /** @var string */
-    protected $alias;
+    protected string $paramName;
+    protected string $alias;
 
     public function __construct(string $paramName, string $alias = null)
     {
